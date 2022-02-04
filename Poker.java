@@ -214,7 +214,7 @@ public class Poker{
     } //endprint
 
     public static void createMaps(){
-        //set up my hashmap which defines the characters before
+        //set up my hashmap which defines the characters before suits
         Poker.values.put('2',2);
         Poker.values.put('3',3);
         Poker.values.put('4',4);
