@@ -4,52 +4,8 @@ import java.util.*;
 
 public class Poker{
 
-    public static HashMap<Character,Integer> values = new HashMap<Character,Integer>();
-
-/*  everything in this comment i made a separate class, id rather the constructor be called player
-    private int id;
-    private int high;
-    private int mid;
-    private int low;
-    private boolean straight;
-    private boolean flush;
-    private boolean threeOfAKind;
-    private boolean pair;
-    //private boolean lead; // might be unnecessary
-    //for pairs i might want to keep track of actual values of cards to make it easier to compare
-     
-    public Poker(int id, int high, boolean straight, boolean flush, boolean threeofAKind, boolean pair){ //trying to make constructor would prefer to call it player but thats life
-        this.id = id;
-        this.high = high;
-        this.mid = mid; // if need 
-        this.low = low; // if need
-        this.straight= straight;
-        this.flush = flush;
-        this.threeOfAKind = threeofAKind;
-        this.pair = pair;
-       // this.lead = lead; // dont think i need this
-    }
-    
-    
-    public static int high(int a, int b, int c){ // dont think i need it
-        if (a > b && a > c){ // a is largest
-            return a;
-        } else if (b > a && b> c){ // b is largest
-            return b;
-        }
-            // if two are equal to each other must make the work for that
-        return c;
-    }
-
-    public static int mid(int a, int b){
-       if (a>b){ //if a is greater
-           return a;
-       } else { //if b is greater or equal to
-        return b;}
-    }
-    */
-
-
+    public static HashMap<Character,Integer> values = new HashMap<Character,Integer>(); //quick way to convert the values of stdin into integers for comparison
+    public static HashMap<String,Boolean> deck = new HashMap<String,Boolean>(); //keeps track of deck
 
     public static boolean straight(int a, int b, int c){ // checks if straight
         int[] arr = {a,b,c};
@@ -62,21 +18,21 @@ public class Poker{
                 return false;
             }
         return true;
-    }
+    }//end straight
 
     public static boolean flush(char a, char b, char c){ // checks if flush
         if (a==b && b ==c){
             return true;
         }
     return false;
-    }
+    }//end flush
 
     public static boolean threeOfAKind(int a, int b, int c){ //checks if a 3ofakind
         if (a==b && b ==c){
             return true;
         }
         return false;
-    }
+    }//end threeOfAKind
 
 
     public static boolean pair(int a, int b, int c, Player player){  // checks for pair and whether the pair is high card or low card
@@ -97,7 +53,7 @@ public class Poker{
         }
 
         return false;
-    }
+    }//end pair
 
 
     public static void lead(Player hand, Player lead, ArrayList<Player> leaders){ //method to determine who is leading rn
@@ -230,74 +186,6 @@ public class Poker{
                     return;
                 }
             } //end pair if
-           
-            /*
-            if(hand.mid>lead.mid){ //higher pair middle value will always be part of the pair
-                //have to make a new leader
-                leaders.clear();
-                leaders.add(hand);
-                return;
-            } else if (hand.mid<lead.mid){ //lower pair
-                return;
-            } else {//if same pair
-
-
-                if (hand.highpair){ //hands higher number was used in the pair must use lower number for checks
-                    if (lead.highpair){ // if both high numbers have been used for pair only lower numbers remain
-                        if (hand.low>lead.low){ //hand has a higher extra card
-                            //make new leader
-                            leaders.clear();
-                            leaders.add(hand);
-                        } else if (hand.low<lead.low){ //hand has a lower extra card
-                            return;
-                        } else { // extra cards are equal
-                            //if tie must add extra leader to arraylist
-                            leaders.add(hand);
-                            return;
-                        }
-                    } else {// end if for both low numbers now must check low for hand and high for lead
-                        if (hand.low>lead.high){ //hand has a higher extra card
-                            //make new leader
-                            leaders.clear();
-                            leaders.add(hand);
-                        } else if (hand.low<lead.high){ //hand has a lower extra card
-                            return;
-                        } else { // extra cards are equal
-                            //if tie must add extra leader to arraylist
-                            leaders.add(hand);
-                            return;
-                        }
-                    }//end else for low hand and high lead
-
-                } else { //if !hand.highpair now must use the highest number in the hand
-                    if (lead.highpair){ //highest number in hand versus lowest number for the leader
-                        if (hand.high>lead.low){ //hand has a higher extra card
-                            //make new leader
-                            leaders.clear();
-                            leaders.add(hand);
-                        } else if (hand.high<lead.low){ //hand has a lower extra card
-                            return;
-                        } else { // extra cards are equal
-                            //if tie must add extra leader to arraylist
-                            leaders.add(hand);
-                            return;
-                        }
-                    } else {// end if for low hand high lead, now checking both highest cards 
-                        if (hand.high>lead.high){ //hand has a higher extra card
-                            //make new leader
-                            leaders.clear();
-                            leaders.add(hand);
-                        } else if (hand.high<lead.high){ //hand has a lower extra card
-                            return;
-                        } else { // extra cards are equal
-                            //if tie must add extra leader to arraylist
-                            leaders.add(hand);
-                            return;
-                        }
-                    } //end else of both highest cards
-                } //end !highpair
-            } //end else of same pair
-            */
 
         }//end pair if
 
@@ -312,10 +200,10 @@ public class Poker{
         } //hand lost :(
 
         return;
-    }
+    }//end lead
 
     public static void print(ArrayList<Player> leaders){ // printing id method
-        //System.out.print("\n");
+        
         for (int i = 0;i<leaders.size();i++){
             System.out.print(leaders.get(0).id);
             if(i!= leaders.size()-1){
@@ -323,12 +211,9 @@ public class Poker{
             }
         }
         System.out.print("\n");
-    }
+    } //endprint
 
-
-
-
-    public static void main(String agrs[]){ // must use highcard
+    public static void createMaps(){
         //set up my hashmap which defines the characters before
         Poker.values.put('2',2);
         Poker.values.put('3',3);
@@ -344,16 +229,132 @@ public class Poker{
         Poker.values.put('K',13);
         Poker.values.put('A',14);
 
+
+        //make my deck of cards to keep track if they have appeared
+        //hearts
+        Poker.deck.put("Ah", false);
+        Poker.deck.put("Kh", false);
+        Poker.deck.put("Qh", false);
+        Poker.deck.put("Jh", false);
+        Poker.deck.put("Th", false);
+        Poker.deck.put("9h", false);
+        Poker.deck.put("8h", false);
+        Poker.deck.put("7h", false);
+        Poker.deck.put("6h", false);
+        Poker.deck.put("5h", false);
+        Poker.deck.put("4h", false);
+        Poker.deck.put("3h", false);
+        Poker.deck.put("2h", false);
+
+        //diamonds
+        Poker.deck.put("Ad", false);
+        Poker.deck.put("Kd", false);
+        Poker.deck.put("Qd", false);
+        Poker.deck.put("Jd", false);
+        Poker.deck.put("Td", false);
+        Poker.deck.put("9d", false);
+        Poker.deck.put("8d", false);
+        Poker.deck.put("7d", false);
+        Poker.deck.put("6d", false);
+        Poker.deck.put("5d", false);
+        Poker.deck.put("4d", false);
+        Poker.deck.put("3d", false);
+        Poker.deck.put("2d", false);
+
+        //clubs
+        Poker.deck.put("Ac", false);
+        Poker.deck.put("Kc", false);
+        Poker.deck.put("Qc", false);
+        Poker.deck.put("Jc", false);
+        Poker.deck.put("Tc", false);
+        Poker.deck.put("9c", false);
+        Poker.deck.put("8c", false);
+        Poker.deck.put("7c", false);
+        Poker.deck.put("6c", false);
+        Poker.deck.put("5c", false);
+        Poker.deck.put("4c", false);
+        Poker.deck.put("3c", false);
+        Poker.deck.put("2c", false);
+
+        //spades
+        Poker.deck.put("As", false);
+        Poker.deck.put("Ks", false);
+        Poker.deck.put("Qs", false);
+        Poker.deck.put("Js", false);
+        Poker.deck.put("Ts", false);
+        Poker.deck.put("9s", false);
+        Poker.deck.put("8s", false);
+        Poker.deck.put("7s", false);
+        Poker.deck.put("6s", false);
+        Poker.deck.put("5s", false);
+        Poker.deck.put("4s", false);
+        Poker.deck.put("3s", false);
+        Poker.deck.put("2s", false);
+
+    } //end createMaps
+
+    public static void checkCards(String a, String b, String c) throws Exception{
+        if(!Poker.deck.containsKey(a)){
+            throw new Exception();
+        }
+        if (Poker.deck.get(a)){
+            throw new Exception();
+        } else{
+            Poker.deck.put(a,true);
+        }
+
+
+        if(!Poker.deck.containsKey(b)){
+            throw new Exception();
+        }
+        if (Poker.deck.get(b)){
+            throw new Exception();
+        } else{
+            Poker.deck.put(b,true);
+        }
+
+
+
+        if(!Poker.deck.containsKey(c)){
+            throw new Exception();
+        }
+        if (Poker.deck.get(c)){
+            throw new Exception();
+        } else{
+            Poker.deck.put(c,true);
+        }
+    } //end checkCards
+
+
+
+
+    public static void main(String agrs[]){ // must use highcard
+        
+
+        createMaps(); // creates the deck and the values
+
         Scanner myObj = new Scanner(System.in);
+
         String k = myObj.nextLine();
         int numofplayers = Integer.parseInt(k);
-       // int numofplayers = myObj.nextInt(); //reads number of players
         ArrayList<Player> leaders = new ArrayList<Player>();//holds leaders
 
         for (int i = 0; i<numofplayers; i++){
             Player currentplayer = new Player(); //build current player values
 
             String temp = myObj.nextLine();//takes in each line all together
+            //check if cards exists as well as if they are duplicated
+            String card1 = temp.substring(2,4);
+            String card2 = temp.substring(5,7);
+            String card3 = temp.substring(8,10);
+
+            try{
+            checkCards(card1, card2, card3);
+            } catch (Exception e){
+                System.out.print("Either duplicate, nonexisting card or a misinput");
+                break;
+            }
+
             //manipulate strings to parse playerID, and then each of their hands
 
             currentplayer.id = Character.getNumericValue(temp.charAt(0)); // place player id
@@ -404,5 +405,5 @@ public class Poker{
         
         print(leaders); // print to stdout
         
-    } //end void
+    } //end main
 }
