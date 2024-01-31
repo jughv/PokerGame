@@ -52,6 +52,7 @@ public class Poker{
             return true;
         }
 
+        System.out.print("bye");
         return false;
     }//end pair
 
