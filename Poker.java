@@ -52,7 +52,11 @@ public class Poker{
             return true;
         }
 
+<<<<<<< HEAD
         System.out.print("bye");
+=======
+        System.out.print("sah dude");
+>>>>>>> main
         return false;
     }//end pair
 
