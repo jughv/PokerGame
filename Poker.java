@@ -52,7 +52,6 @@ public class Poker{
             return true;
         }
 
-        System.out.print("sah dude");
         return false;
     }//end pair
 
